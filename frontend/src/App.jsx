@@ -1,5 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ThemeProvider, CssBaseline } from '@mui/material'
+import theme from './theme/theme'
 
 // Views
 import Home from './views/Home.jsx'
@@ -18,51 +20,54 @@ import AuthProvider from './context/AuthContext'
 
 export default function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/jobs" element={<JobList />} />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AuthProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/jobs" element={<JobList />} />
 
-          {/* Protected Routes */}
-          <Route
-            path="/user/dashboard"
-            element={
-              <PrivateRoute role="user">
-                <UserDashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/employer/dashboard"
-            element={
-              <PrivateRoute role="employer">
-                <EmployerDashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/employer/post"
-            element={
-              <PrivateRoute role="employer">
-                <JobPost />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/dev/dashboard"
-            element={
-              <PrivateRoute role={['dev', 'admin']}>
-                <DevDashboard />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+            {/* Protected Routes */}
+            <Route
+              path="/user/dashboard"
+              element={
+                <PrivateRoute role="user">
+                  <UserDashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/employer/dashboard"
+              element={
+                <PrivateRoute role="employer">
+                  <EmployerDashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/employer/post"
+              element={
+                <PrivateRoute role="employer">
+                  <JobPost />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/dev/dashboard"
+              element={
+                <PrivateRoute role={['dev', 'admin']}>
+                  <DevDashboard />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
